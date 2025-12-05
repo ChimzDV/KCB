@@ -1,4 +1,3 @@
-
 /* Fonts */
 :root {
   --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -1050,7 +1049,13 @@ section,
 .services .service-item {
   background-color: var(--surface-color);
   padding: 40px;
-  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0 30px rgba(179, 2, 2, 0.1);
+  height: 100%;
+}
+.services .service-item:hover {
+  background-color: var(--surface-color);
+  padding: 40px;
+  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.884);
   height: 100%;
 }
 
@@ -1183,6 +1188,7 @@ section,
 .alt-services .icon-box:hover i {
   background-color: var(--accent-color);
   color: var(--contrast-color);
+  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.884);
 }
 
 .alt-services .icon-box h4 {
@@ -1418,6 +1424,28 @@ section,
 .projects .portfolio-content:hover img {
   transform: scale(1.1);
 }
+
+/* ============================ */
+/* Futuristic Projects Section Styles */
+.projects {
+    background: linear-gradient(135deg, rgba(233, 214, 161, 0.8), rgba(131, 122, 100, 0.507)), url('assets/img/futuristic-bg.jpg') no-repeat center center/cover; /* Add a futuristic background */
+    padding: 60px 0;
+    border-radius: 15px; /* Rounded corners for a modern look */
+}
+
+.projects .portfolio-item {
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+    border: 2px solid transparent; /* Border for hover effect */
+    border-radius: 10px; /* Rounded corners for items */
+}
+
+.projects .portfolio-item:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 0 40px rgb(0, 0, 0); /* Neon glow effect */
+    border-color: var(--neon-yellow); /* Neon border on hover */
+}
+
+/* ============================ */
 
 /*--------------------------------------------------------------
 # Testimonials Section
