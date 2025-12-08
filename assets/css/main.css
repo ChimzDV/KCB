@@ -136,7 +136,7 @@ h6 {
   --heading-color: #ffffff;
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 20px 0;
+  padding: 10px 0;
   transition: all 0.5s;
   z-index: 997;
 }
@@ -942,65 +942,141 @@ section,
 }
 
 .get-started .php-email-form {
-  background: color-mix(in srgb, var(--default-color), transparent 97%);
-  padding: 30px;
-  height: 100%;
+  /* glass + gradient base */
+  background: linear-gradient(180deg, rgba(10,12,16,0.55), rgba(8,10,14,0.35));
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  padding: 34px;
+  border-radius: 14px;
+  position: relative;
+  color: var(--contrast-color);
+  box-shadow: 0 12px 40px rgba(2,6,12,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
 }
 
-@media (max-width: 575px) {
-  .get-started .php-email-form {
-    padding: 20px;
-  }
+/* subtle glowing accents behind the card */
+.get-started .php-email-form:before{
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(400px 160px at 10% 10%, rgba(254,185,0,0.06), transparent 12%),
+    radial-gradient(360px 140px at 90% 90%, rgba(34,211,238,0.04), transparent 14%);
+  transform: rotate(10deg);
+  transition: opacity 0.4s ease;
 }
 
-.get-started .php-email-form h3 {
-  font-size: 14px;
+/* bring form content above decorations */
+.get-started .php-email-form * { position: relative; z-index: 2; }
+
+/* modern heading */
+.get-started .php-email-form h3{
+  color: #e8f6ff;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-size: 18px;
 }
 
-.get-started .php-email-form p {
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
+/* inputs: dark translucent with subtle inner glow */
 .get-started .php-email-form input[type=text],
 .get-started .php-email-form input[type=email],
 .get-started .php-email-form textarea {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #e6f7ff;
+  padding: 12px 14px;
+  border-radius: 10px;
   font-size: 14px;
-  padding: 10px 15px;
-  box-shadow: none;
-  border-radius: 0;
-  color: var(--default-color);
-  background-color: color-mix(in srgb, var(--background-color), transparent 20%);
-  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+  width: 100%;
+  resize: vertical;
 }
 
-.get-started .php-email-form input[type=text]:focus,
-.get-started .php-email-form input[type=email]:focus,
-.get-started .php-email-form textarea:focus {
-  border-color: var(--accent-color);
-}
-
-.get-started .php-email-form input[type=text]::placeholder,
-.get-started .php-email-form input[type=email]::placeholder,
+/* placeholder color more futuristic */
+.get-started .php-email-form input::placeholder,
 .get-started .php-email-form textarea::placeholder {
-  color: color-mix(in srgb, var(--default-color), transparent 70%);
+  color: rgb(209, 208, 203);
 }
 
+/* focus state with neon-accent glow */
+.get-started .php-email-form input:focus,
+.get-started .php-email-form textarea:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--accent-color), rgba(34,211,238,0.6) 40%);
+  box-shadow: 0 8px 30px rgba(34,211,238,0.06), 0 0 18px color-mix(in srgb, var(--accent-color), rgba(34,211,238,0.12) 40%);
+  transform: translateY(-2px);
+}
+
+/* messages styled to match theme */
+.get-started .php-email-form .error-message,
+.get-started .php-email-form .sent-message,
+.get-started .php-email-form .loading {
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 13px;
+  display: none;
+  z-index: 2;
+}
+
+/* Hide loading indicator by default; allow explicit show via `.show` class */
+.get-started .php-email-form .loading {
+  display: none !important;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color: #e8f6ff;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 12px 14px;
+  z-index: 2;
+}
+
+/* If you need to show it via JS, add the 'show' class */
+.get-started .php-email-form .loading.show {
+  display: flex !important;
+}
+
+/* CTA button: rounded, gradient, glow */
 .get-started .php-email-form button[type=submit] {
   color: var(--contrast-color);
-  background: var(--accent-color);
+  background: linear-gradient(90deg, var(--accent-color) 0%, #22d3ee 120%);
   border: 0;
-  padding: 10px 30px;
-  transition: 0.4s;
-  border-radius: 4px;
+  padding: 12px 26px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(34,211,238,0.06), 0 6px 18px rgba(0,0,0,0.45);
+  cursor: pointer;
+  display: inline-block;
+  z-index: 2;
 }
 
+/* hover state */
 .get-started .php-email-form button[type=submit]:hover {
-  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 50px rgba(34,211,238,0.09), 0 10px 30px rgba(0,0,0,0.5);
 }
+
+/* small screens adjustments */
+@media (max-width: 575px) {
+  .get-started .php-email-form {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .get-started .php-email-form button[type=submit] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+  }
+}
+/* ===== End Futuristic Get-Started Overrides ===== */
 
 /*--------------------------------------------------------------
 # Constructions Section
@@ -1047,86 +1123,126 @@ section,
 # Services Section
 --------------------------------------------------------------*/
 .services .service-item {
-  background-color: var(--surface-color);
-  padding: 40px;
-  box-shadow: 0px 0 30px rgba(179, 2, 2, 0.1);
+  background: linear-gradient(135deg, rgba(6,10,15,0.65), rgba(18,22,30,0.4));
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  color: var(--contrast-color);
+  padding: 36px;
+  border-radius: 14px;
   height: 100%;
-}
-.services .service-item:hover {
-  background-color: var(--surface-color);
-  padding: 40px;
-  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.884);
-  height: 100%;
-}
-
-.services .service-item .icon {
-  width: 48px;
-  height: 48px;
   position: relative;
-  margin-bottom: 50px;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
 }
 
-.services .service-item .icon i {
-  color: var(--heading-color);
-  font-size: 56px;
-  transition: ease-in-out 0.3s;
+.services .service-item:before{
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  background:
+    radial-gradient(600px 300px at 10% 10%, rgba(254,185,0,0.07), transparent 12%),
+    radial-gradient(500px 250px at 90% 90%, rgba(34,211,238,0.05), transparent 14%);
+  transform: rotate(12deg);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.services .service-item .icon{
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  color: var(--contrast-color);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.services .service-item .icon:after{
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 10% 10%, rgba(254,185,0,0.14), transparent 20%), radial-gradient(circle at 90% 90%, rgba(34,211,238,0.08), transparent 25%);
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.services .service-item h3{
+  color: #e8f6ff;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 0 12px 0;
+  position: relative;
+  z-index: 2;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.services .service-item p{
+  color: color-mix(in srgb, var(--contrast-color), transparent 10%);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 14px;
   z-index: 2;
   position: relative;
 }
 
-.services .service-item .icon:before {
-  position: absolute;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: color-mix(in srgb, var(--heading-color), transparent 95%);
-  border-radius: 50px;
-  z-index: 1;
-  top: 10px;
-  right: -20px;
-  transition: 0.3s;
-}
-
-.services .service-item h3 {
-  color: color-mix(in srgb, var(--heading-color), transparent 20%);
+.services .service-item .readmore{
+  color: #9fe7ff;
   font-weight: 700;
-  margin: 0 0 20px 0;
-  padding-bottom: 8px;
-  font-size: 22px;
-  position: relative;
-  display: inline-block;
-  border-bottom: 4px solid color-mix(in srgb, var(--heading-color), transparent 90%);
-  transition: 0.3s;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 2;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.services .service-item p {
-  line-height: 24px;
-  font-size: 14px;
-  margin-bottom: 0;
+.services .service-item:hover{
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 28px 80px rgba(204, 177, 89, 0.678), 0 12px 40px rgba(151, 133, 82, 0.76);
+  border-color: rgba(34,211,238,0.12);
 }
 
-.services .service-item .readmore {
-  margin-top: 15px;
-  display: inline-block;
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+.services .service-item:hover .icon{
+  transform: translateY(-6px) rotate(-6deg);
+  box-shadow: 0 20px 50px rgba(235, 196, 70, 0.616);
 }
 
-.services .service-item:hover .icon i {
-  color: var(--heading-color);
+.services .service-item:hover .icon:after{
+  opacity: 1;
 }
 
-.services .service-item:hover .icon:before {
-  background: var(--accent-color);
-}
-
-.services .service-item:hover h3 {
-  border-color: var(--accent-color);
-  color: var(--heading-color);
-}
-
-.services .service-item:hover .readmore {
+.services .service-item:hover .readmore{
   color: var(--accent-color);
+  transform: translateX(6px);
 }
+
+/* responsive tweak to keep layout tidy on small screens */
+@media (max-width: 575px) {
+  .services .service-item {
+    padding: 28px;
+    border-radius: 10px;
+  }
+
+  .services .service-item .icon {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+}
+/* ===== End Futuristic Services Overrides ===== */
 
 /*--------------------------------------------------------------
 # Alt Services Section
@@ -2891,3 +3007,161 @@ section,
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   font-size: 14px;
 }
+
+/* ===== Futuristic Nav / Header Overrides ===== */
+.header {
+  background: linear-gradient(180deg, rgba(6,8,12,0.45), rgba(6,8,12,0.25));
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 18px 0;
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.25s ease;
+  z-index: 999;
+}
+
+/* subtle glass glow when scrolled */
+.scrolled .header {
+  background: linear-gradient(180deg, rgba(8,10,14,0.75), rgba(6,8,12,0.6));
+  box-shadow: 0 10px 40px rgba(2,6,12,0.6);
+  transform: translateY(0);
+}
+
+/* logo tweaks */
+.header .logo .sitename {
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #e9f7ff;
+  text-shadow: 0 2px 12px rgba(34,211,238,0.06);
+}
+
+/* Nav container modern layout */
+.navmenu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: transparent;
+}
+
+/* main links */
+.navmenu a,
+.navmenu a:focus {
+  color: rgba(233, 246, 255, 0.92);
+  font-size: 14px;
+  font-family: var(--nav-font);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  position: relative;
+  transition: color 0.22s ease, transform 0.18s ease, background 0.22s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* neon underline using pseudo element */
+.navmenu > ul > li > a::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(254,185,0,0.0), rgba(34,211,238,0.0));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s cubic-bezier(.2,.9,.2,1), background 0.28s ease;
+  pointer-events: none;
+}
+
+/* hover: glow + expand underline */
+.navmenu a:hover,
+.navmenu .active {
+  color: var(--contrast-color);
+  background: linear-gradient(90deg, rgba(34,211,238,0.03), rgba(254,185,0,0.02));
+  transform: translateY(-2px);
+}
+
+.navmenu a:hover::after,
+.navmenu .active::after {
+  transform: scaleX(1);
+  background: linear-gradient(90deg, rgba(34,211,238,0.85), rgba(254,185,0,0.85));
+  box-shadow: 0 8px 30px rgba(34,211,238,0.08), 0 2px 12px rgba(254,185,0,0.06);
+}
+
+/* dropdown styling - glass panel with neon shadow */
+.navmenu .dropdown ul {
+  background: linear-gradient(180deg, rgba(12,14,18,0.85), rgba(8,10,12,0.7));
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #e8f6ff;
+  box-shadow: 0 20px 50px rgba(17,24,39,0.7), 0 6px 18px rgba(34,211,238,0.03);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+/* dropdown links */
+.navmenu .dropdown ul a {
+  color: color-mix(in srgb, var(--contrast-color), transparent 30%);
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 6px;
+  display: block;
+}
+
+.navmenu .dropdown ul a:hover {
+  color: var(--contrast-color);
+  background: linear-gradient(90deg, rgba(34,211,238,0.06), rgba(254,185,0,0.02));
+  box-shadow: 0 8px 28px rgba(34,211,238,0.04);
+}
+
+/* mobile toggle: circular neon button */
+.mobile-nav-toggle {
+  background: linear-gradient(180deg, rgba(34,211,238,0.09), rgba(254,185,0,0.06));
+  color: #e8f6ff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease, box-shadow 0.22s ease;
+  box-shadow: 0 8px 24px rgba(34,211,238,0.06);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.mobile-nav-toggle:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 18px 48px rgba(34,211,238,0.09);
+}
+
+/* mobile nav panel */
+.mobile-nav-active .navmenu>ul {
+  background: linear-gradient(180deg, rgba(8,10,12,0.95), rgba(6,8,12,0.9));
+  border-radius: 12px;
+  padding: 18px 8px;
+  box-shadow: 0 40px 120px rgba(2,6,12,0.8);
+}
+
+/* accessibility: focus states */
+.navmenu a:focus {
+  outline: none;
+  box-shadow: 0 6px 28px rgba(34,211,238,0.06);
+  background: linear-gradient(90deg, rgba(34,211,238,0.04), rgba(254,185,0,0.03));
+}
+
+/* reduce contrast on very small screens to avoid clutter */
+@media (max-width: 767px) {
+  .navmenu a {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  .header .logo .sitename {
+    font-size: 18px;
+  }
+}
+/* ===== End Futuristic Nav / Header Overrides ===== */
